@@ -6,6 +6,13 @@
     <body>
         <p>Hello World 1</p>
         <p>Hello World 2</p>
+        <p>Hello World 3</p>
+        <!-- class one, use d3.js, select and selectAll-->
+        <script src="./d3.js" charset="utf-8"></script>
+        <script>
+            var p = d3.select("body").selectAll("p").text("LeoBrilliant");
+            p.style("color", "red").style("font-size", "72px");
+        </script>
         <script>
             var paragraphs = document.getElementsByTagName("p");
             for(var i = 0; i < paragraphs.length; ++i)
@@ -13,6 +20,36 @@
                 var paragraph = paragraphs.item(i);
                 paragraph.interHTML = "I like dog. " + i;
             }
+        </script>
+        <!-- class two, datum and data-->
+        <script>
+            var str = "LuJiaZui";
+            var body = d3.select("body");
+            var p = body.selectAll("p");
+            p.datum(str);
+            p.text(function(d, i){
+                return "第 " + i + " 个元素绑定的数据是 " + d;
+            });
+        </script>
+        <script>
+            var dataset = ["I'm male", "I'm 31", "I'm single"];
+            var body = d3.select("body");
+            var p = body.selectAll("p");
+            p.data(dataset).text(function(d, i){
+                return d;
+            });
+        </script>
+        <!-- class two-one, id, class, append, insert, remove -->
+        <p>分割线</p>
+        <p id="myid">My ID test</p>
+        <p class="myclass">My Class test</p>
+        <p class="myclass">My Class test</p>
+        <script>
+            var body = d3.select("body");
+            body.append("p").text("append p element");
+            body.insert("p", "#myid").text("insert p element");
+            body.selectAll(".myclass").style("color", "green");
+            body.select("#myid").remove();
         </script>
     </body>
 </html>
