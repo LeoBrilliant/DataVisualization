@@ -4,6 +4,19 @@
         <title>SVG</title>
         <script src="./d3.js" charset="utf-8"></script>
     </head>
+    <style>
+    .axis path
+    .axis line{
+        fill: none;
+        stroke: black;
+        shape-rendering: crispEdges;
+    }
+    .axis text{
+        font-family: sans-serif;
+        font-size: 11px;
+    }
+    </style>
+
     <body>
         <!-- class three, SVG-->
         <svg>
@@ -39,6 +52,63 @@
                 .enter()
                 .append("rect");
             -->
+
+        </script>
+        <!-- class three, SVG-->
+        <svg>
+            <rect></rect>
+            <rect></rect>
+        </svg>
+        <script>
+            var dataset = [1.2, 2.3, 0.9, 1.5, 3.3];
+            var width = 300;
+            var height = 300;
+            var rectHeight = 25;
+
+            <!-- 线性比例尺 -->
+            var min = d3.min(dataset);
+            var max = d3.max(dataset);
+            var linear = d3.scale.linear()
+                .domain([0, max])
+                .range([0, width]);
+            <!-- 序数比例尺 -->
+            var index = [0, 1, 2, 3, 4];
+            var color = ["red", "blue", "green", "yellow", "black"];
+            var ordinal = d3.scale.ordinal()
+                .domain(index)
+                .range(color);
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            svg.selectAll("rect")
+                .data(dataset)
+                .enter()
+                .append("rect")
+                .attr("x", 20)
+                .attr("y", function(d, i){
+                    return i * rectHeight;
+                })
+                .attr("width", function(d){
+                    return linear(d);
+                })
+                .attr("height", rectHeight - 2)
+                .attr("fill", function(i){
+                    return ordinal(i);
+                });
+
+            <!-- class five, axis -->
+            var axis = d3.svg.axis()
+                .scale(linear)
+                .orient("bottom")
+                .ticks(7);
+
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(20, 130)")
+                .call(axis);
         </script>
     </body>
 </html>
