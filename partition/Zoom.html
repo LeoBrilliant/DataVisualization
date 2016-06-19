@@ -1,0 +1,65 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Partitions</title>
+    <script src="../d3.js" charset="utf-8"></script>
+    <style>
+    .node_text {
+	font-size: 10px;
+	text-anchor: middle;
+    }
+</style>
+</head>
+<body>
+    <script>
+        var width = 600;
+        var height = 400;
+        var color = d3.scale.category20();
+
+        var zoom = d3.behavior.zoom()
+            .scaleExtent([0.1, 10])
+            .on("zoom", zoomed);
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            ;
+
+        var circles = [
+            {cx: 150, cy: 200, r: 30},
+            {cx: 250, cy: 200, r: 30},
+        ];
+
+        var drag = d3.behavior.drag()
+            .on("drag", dragmove);
+
+        function dragmove(d) {
+            d3.select(this)
+                .attr("cx", d.cx = d3.event.x)
+                .attr("cy", d.cy = d3.event.y);
+        }
+
+
+        var circles_group = svg.append("g")
+            .call(zoom);
+
+        console.log(circles);
+
+        circles_group.selectAll("circle")
+            .data(circles)
+            .enter()
+            .append("circle")
+            .attr("cx", function(d){ return d.cx; })
+            .attr("cy", function(d){ return d.cy; })
+            .attr("r", function(d){ return d.r; })
+            .attr("fill", "black")
+            .call(drag);
+            ;
+
+        function zoomed(){
+            d3.select(this)
+                .attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        }
+    </script>
+</body>
+</html>

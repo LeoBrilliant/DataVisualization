@@ -86,21 +86,21 @@
             };
         var cluster = d3.layout.cluster()
             .size([width, height - 200]);
-        /*
+
         d3.json("city.json", function(error, root){
             var nodes = cluster.nodes(root);
             var links = cluster.links(nodes);
             console.log(nodes);
             console.log(links);
-        });
-        */
 
+
+        /*
         var nodes = cluster.nodes(jsondata);
         console.log(nodes);
 
         var links = cluster.links(nodes);
         console.log(links);
-
+        */
         var diagonal = d3.svg.diagonal()
             .projection(function(d){ return [d.y, d.x]; });
 
@@ -128,6 +128,7 @@
             .attr("dy", 3)
             .style("text-anchor", function(d){ return d.children ? "end" : "start" ;})
             .text(function(d){ return d.name; });
+    });
     </script>
 </body>
 </html>
